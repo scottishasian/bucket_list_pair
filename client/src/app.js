@@ -39,13 +39,14 @@ const app = function(){
 const createButtonClicked = function(evt) {
   evt.preventDefault();
   console.log('submit button clicked')
-  console.log(('#select').value);
 
 
-  const nameValue = document.querySelector('#select').value;
+  const value = document.querySelector('#select').value;
+  const country = countries[value];
+  // const nameValue = document.querySelector(value.name);
 
   const body = {
-    name: nameValue
+    name: country.name
   }
 
   request.post(getCountriesRequestComplete, body);
