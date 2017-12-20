@@ -32,6 +32,31 @@ MongoClient.connect('mongodb://localhost:27017', function(err, client){
    })
  });
 
+ app.get('/api/list', function(req, res) {
+   db.collection('list').find().toArray(function(err, result) {
+     if(err){
+       console.log(err);
+       res.status(500);
+       res.send();
+       return;
+     }
+     res.json(result);
+   });
+ });
+
+ app.delete('/api/list', function(req, res) {
+   db.collection('list').remove({}, function(err, result) {
+     if(err){
+       console.log(err);
+       res.status(500);
+       res.send();
+       return;
+     }
+     res.status(204);
+     res.send();
+   });
+ });
+
 
 
 
