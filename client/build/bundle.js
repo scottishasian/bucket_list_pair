@@ -112,13 +112,16 @@ const createButtonClicked = function(evt) {
 
   const value = document.querySelector('#select').value;
   const country = countries[value];
+  const reasonValue = document.querySelector('#reason').value;
   // const nameValue = document.querySelector(value.name);
 
   const body = {
-    name: country.name
+    name: country.name,
+    reason: reasonValue
   }
 
   request.post(getCountriesRequestComplete, body);
+  bucketView.render(body);
 
 }
 
@@ -224,7 +227,6 @@ BucketView.prototype.addCountry = function(country) {
  this.countries.push(country);
  // this.render(country);
 }
-//Adds quotes to an array to display later.
 
 BucketView.prototype.clear = function(country) {
  this.countries = [];
@@ -232,14 +234,14 @@ BucketView.prototype.clear = function(country) {
  ul.innerHTML = '';
 }
 
-// BucketView.prototype.render = function(country){
-//    const ul = document.querySelector('#save-country');
-//    const li = document.createElement('li');
-//    const text = document.createElement('p');
-//    text.innerText = `${country.name}: "${country.country}"`;
-//    li.appendChild(text);
-//    ul.appendChild(li);
-// }
+BucketView.prototype.render = function(country){
+   const ul = document.querySelector('#populate');
+   const li = document.createElement('li');
+   const text = document.createElement('p');
+   text.innerText = `${country.name}: ${country.reason}`;
+   li.appendChild(text);
+   ul.appendChild(li);
+}
 
 module.exports = BucketView;
 

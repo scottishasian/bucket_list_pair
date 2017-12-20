@@ -43,13 +43,16 @@ const createButtonClicked = function(evt) {
 
   const value = document.querySelector('#select').value;
   const country = countries[value];
+  const reasonValue = document.querySelector('#reason').value;
   // const nameValue = document.querySelector(value.name);
 
   const body = {
-    name: country.name
+    name: country.name,
+    reason: reasonValue
   }
 
   request.post(getCountriesRequestComplete, body);
+  bucketView.render(body);
 
 }
 
