@@ -97,11 +97,12 @@ const app = function(){
     const para2 = document.createElement("p");
     li.innerText = "Name: " + countries[this.value].name
     para.innerText = "Population: " + countries[this.value].population
-    para2.innerText = "Sub-Region: " + countries[this.value].subregion
+    para2.innerText = "Region: " + countries[this.value].region
     img.src = countries[this.value].flag;
     ul.appendChild(li);
     ul.appendChild(img);
     p.appendChild(para);
+    p.appendChild(para2);
   });
 
 }
@@ -117,7 +118,8 @@ const createButtonClicked = function(evt) {
 
   const body = {
     name: country.name,
-    reason: reasonValue
+    reason: reasonValue,
+    flag: country.flag
   }
 
   request.post(getCountriesRequestComplete, body);

@@ -12,3 +12,8 @@ img {
   padding: 10px;
   margin-right: 20px;
 }
+
+#yoda-pic {
+  float: right;
+  width: 300px;
+}
