@@ -1,6 +1,9 @@
 const express = require('express');
 const parser = require('body-parser');
 const app = express();
+const path = require('path');
+
+
 
 const MongoClient = require('mongodb').MongoClient;
 // we only want access to that specific object in MongoDB.
@@ -9,6 +12,10 @@ const MongoClient = require('mongodb').MongoClient;
 app.use(parser.json());
 app.use(express.static('client/build'));
 app.use(parser.urlencoded({extended: true}));
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname + '/index.html'));
+});
+
 
 MongoClient.connect('mongodb://localhost:27017', function(err, client){
   if(err){
@@ -56,15 +63,6 @@ MongoClient.connect('mongodb://localhost:27017', function(err, client){
      res.send();
    });
  });
-
-
-
-
-
-
-
-
-
 
   app.listen(3000, function(){
     console.log("Listening on port 3000");
