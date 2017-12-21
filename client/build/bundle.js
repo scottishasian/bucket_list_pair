@@ -67,8 +67,8 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const BucketView = __webpack_require__(2);
-const Request = __webpack_require__(1);
+const BucketView = __webpack_require__(1);
+const Request = __webpack_require__(2);
 
 const bucketView = new BucketView();
 const request = new Request("http://localhost:3000/api/list")
@@ -167,6 +167,38 @@ document.addEventListener('DOMContentLoaded', app);
 /* 1 */
 /***/ (function(module, exports) {
 
+const BucketView = function(){
+ this.countries = [];
+ console.log(this.countries);
+}
+
+BucketView.prototype.addCountry = function(country) {
+ this.countries.push(country);
+ // this.render(country);
+}
+
+BucketView.prototype.clear = function(country) {
+ this.countries = [];
+ const ul = document.querySelector('#save-country');
+ ul.innerHTML = '';
+}
+
+BucketView.prototype.render = function(country){
+   const ul = document.querySelector('#populate');
+   const li = document.createElement('li');
+   const text = document.createElement('p');
+   text.innerText = `${country.name}: ${country.reason}`;
+   li.appendChild(text);
+   ul.appendChild(li);
+}
+
+module.exports = BucketView;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
 const Request = function(url) {
   this.url = url;
 }
@@ -214,38 +246,6 @@ Request.prototype.delete = function(callback) {
 }
 
 module.exports = Request;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-const BucketView = function(){
- this.countries = [];
- console.log(this.countries);
-}
-
-BucketView.prototype.addCountry = function(country) {
- this.countries.push(country);
- // this.render(country);
-}
-
-BucketView.prototype.clear = function(country) {
- this.countries = [];
- const ul = document.querySelector('#save-country');
- ul.innerHTML = '';
-}
-
-BucketView.prototype.render = function(country){
-   const ul = document.querySelector('#populate');
-   const li = document.createElement('li');
-   const text = document.createElement('p');
-   text.innerText = `${country.name}: ${country.reason}`;
-   li.appendChild(text);
-   ul.appendChild(li);
-}
-
-module.exports = BucketView;
 
 
 /***/ })

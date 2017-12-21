@@ -1,19 +1,47 @@
 h1 {
   text-align: center;
+  margin: auto;
 }
 
 img {
-  width: 500px;
+  width: 400px;
+}
+
+button {
+  padding: 10px;
 }
 
 #populate {
-  display: inline-block;
+
+  list-style: none outside none;
   float: right;
-  padding: 10px;
-  margin-right: 20px;
+  padding: 0px;
+  margin-right: 10px;
+  border-style: solid;
+  width: 200px;
+  z-index: 100;
+}
+
+#populate li {
+  text-align: left;
+}
+
+#container {
+  width: 500px;
+  margin: 0px;
 }
 
 #yoda-pic {
   float: right;
   width: 300px;
+  display: flex;
+}
+
+p {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  font-style: italic;
 }

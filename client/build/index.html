@@ -6,9 +6,12 @@
     <script src='bundle.js'></script>
     <title>Bucket List</title>
   </head>
+  <nav>
+    <img id="yoda-pic" src="/images/doge.png" />
+  </nav>
   <body>
     <h1>Bucket List</h1>
-    <img id="yoda-pic" src="/images/doge.png" />
+
     <form>
       <input type="text" id="reason" placeholder="Why" name="reason">
       <button id="save-country"> Add Country </button>
@@ -16,12 +19,16 @@
 
     <select id="select">
     <option disabled select>Select a country</option>
-
     </select>
+
+      <div id="container">
         <ul id="country-list"></ul>
         <p id="country-info"></p>
+      </div>
+
 
       <div id="populate">
+        <h2>Wish List</h2>
         <ul id="country-list"></ul>
         <p id="country-info"></p>
       </div>
