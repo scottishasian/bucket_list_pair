@@ -1,5 +1,6 @@
 const BucketView = require('./views/bucketViews');
 const Request = require('./services/request.js');
+const MapWrapper = require('./mapWrapper.js');
 
 const bucketView = new BucketView();
 const request = new Request("http://localhost:3000/api/list")
@@ -37,6 +38,7 @@ const app = function(){
   });
 
 }
+
 const createButtonClicked = function(evt) {
   evt.preventDefault();
   console.log('submit button clicked')
@@ -89,6 +91,18 @@ const getCountriesRequestComplete = function(country) {
 
 }
 
+const initialize =  function() {
+  let mapDiv = document.getElementById('country-map');
+
+  let center = {lat: 40.712784, lng: -34.005941};
+
+  let countryMap = new MapWrapper(mapDiv, center, 10, function() {
+    countryMap.addMarker(center);
+  });
+
+}
+
 
 
 document.addEventListener('DOMContentLoaded', app);
+window.addEventListener('load', initialize);

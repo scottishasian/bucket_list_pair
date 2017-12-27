@@ -14,9 +14,8 @@ button {
 #populate {
 
   list-style: none outside none;
-  float: right;
   padding: 0px;
-  margin-right: 10px;
+  float: right;
   border-style: solid;
   width: 200px;
   z-index: 100;
@@ -28,13 +27,16 @@ button {
 
 #container {
   width: 500px;
+  height: 400px;
   margin: 0px;
+  border-style: solid;
 }
 
 #yoda-pic {
   float: right;
-  width: 300px;
+  width: 200px;
   display: flex;
+  border-style: solid
 }
 
 p {
@@ -44,4 +46,10 @@ p {
 h2 {
   text-align: center;
   font-style: italic;
+}
+
+#country-map {
+  height: 500px;
+  width: 500px;
+  border-style: solid;
 }
