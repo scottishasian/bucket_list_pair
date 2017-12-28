@@ -86,7 +86,15 @@ const app = function(){
     const createCountryButton = document.querySelector('#save-country');
     createCountryButton.addEventListener('click', createButtonClicked);
 
+
+    latlng = {lat: countries[this.value].latlng[0], lng: countries[this.value].latlng[1]};
+    console.log(latlng);
+    // countryMap.setCenter(latlng);
+
     request.get(getCountriesRequestComplete);
+
+
+
 
     const ul = document.querySelector('#country-list');
     const p = document.querySelector('#country-info');
@@ -108,6 +116,20 @@ const app = function(){
 
 }
 
+const initialize =  function() {
+  let mapDiv = document.getElementById('country-map');
+
+
+
+  let center = {lat: 44.212, lng: -3.343224};
+
+  countryMap = new MapWrapper(mapDiv, center, 10, function() {
+    countryMap.addMarker(center);
+  });
+  //By installing googlemaps, don't need map JS, or to call google maps in
+  //index.html
+}
+
 const createButtonClicked = function(evt) {
   evt.preventDefault();
   console.log('submit button clicked')
@@ -116,13 +138,14 @@ const createButtonClicked = function(evt) {
   const value = document.querySelector('#select').value;
   const country = countries[value];
   const reasonValue = document.querySelector('#reason').value;
-  // const nameValue = document.querySelector(value.name);
+
 
   const body = {
     name: country.name,
     reason: reasonValue,
     flag: country.flag
   }
+
 
   request.post(getCountriesRequestComplete, body);
   bucketView.render(body);
@@ -151,6 +174,8 @@ const handlSelectChange = function(countries) {
     option.value = index;
     select.appendChild(option);
 
+
+
   }.bind(this));
 
 }
@@ -160,16 +185,7 @@ const getCountriesRequestComplete = function(country) {
 
 }
 
-const initialize =  function() {
-  let mapDiv = document.getElementById('country-map');
 
-  let center = {lat: 40.712784, lng: -34.005941};
-
-  let countryMap = new MapWrapper(mapDiv, center, 10, function() {
-    countryMap.addMarker(center);
-  });
-
-}
 
 
 
@@ -270,6 +286,7 @@ var GoogleMapsLoader =  __webpack_require__(4);
 
 const MapWrapper = function(container, coordinates, zoom, whenmaploaded) {
   GoogleMapsLoader.load(function(google){
+    this.google = google; //google object.
     this.googleMap = new google.maps.Map(container, {
       center: coordinates,
       zoom: zoom
@@ -279,7 +296,14 @@ const MapWrapper = function(container, coordinates, zoom, whenmaploaded) {
   whenmaploaded();
   //if this line hits, the map is loaded.
 
-}.bind(this));
+  }.bind(this));
+}
+
+MapWrapper.prototype.addMarker = function(coords) {
+  var marker = new this.google.maps.Marker({
+    position: coords,
+    map: this.googleMap
+  })
 }
 
 module.exports = MapWrapper;
