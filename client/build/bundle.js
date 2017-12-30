@@ -86,16 +86,17 @@ const app = function(){
     const createCountryButton = document.querySelector('#save-country');
     createCountryButton.addEventListener('click', createButtonClicked);
 
-
-    latlng = {lat: countries[this.value].latlng[0], lng: countries[this.value].latlng[1]};
-    console.log(latlng);
-    // countryMap.setCenter(latlng);
+    //map functions
+    let center = {lat: 0, lng: 0};
+    let mapDiv = document.getElementById('country-map');
+    let countryMap = new MapWrapper(mapDiv, center, 10);
+    countryMap.myLocation();
 
     request.get(getCountriesRequestComplete);
 
 
 
-
+    //Country info posting, need to refactor
     const ul = document.querySelector('#country-list');
     const p = document.querySelector('#country-info');
     ul.innerHTML = "";
@@ -116,19 +117,23 @@ const app = function(){
 
 }
 
-const initialize =  function() {
-  let mapDiv = document.getElementById('country-map');
-
-
-
-  let center = {lat: 44.212, lng: -3.343224};
-
-  countryMap = new MapWrapper(mapDiv, center, 10, function() {
-    countryMap.addMarker(center);
-  });
+// const initialize =  function(latlng) {
+//   let mapDiv = document.getElementById('country-map');
+//
+//
+//
+//   let center = {lat: 0, lng: 0};
+//
+//   let newLocation = latlng;
+//
+//   let countryMap = new MapWrapper(mapDiv, center, 10, function() {
+//     countryMap.addMarker(center);
+//     countryMap.addMarker(latlng);
+//   });
   //By installing googlemaps, don't need map JS, or to call google maps in
   //index.html
-}
+
+// }
 
 const createButtonClicked = function(evt) {
   evt.preventDefault();
@@ -174,6 +179,12 @@ const handlSelectChange = function(countries) {
     option.value = index;
     select.appendChild(option);
 
+    // const location = {lat: country.latlng[0], lng: country.latlng[1]};
+    // const center = location;
+    // countryMap.addMarker(center, "Welcome to" + country.name);
+    // countryMap.setCenter(center);
+
+
 
 
   }.bind(this));
@@ -190,7 +201,7 @@ const getCountriesRequestComplete = function(country) {
 
 
 document.addEventListener('DOMContentLoaded', app);
-window.addEventListener('load', initialize);
+// window.addEventListener('load', initialize);
 
 
 /***/ }),
@@ -293,8 +304,8 @@ const MapWrapper = function(container, coordinates, zoom, whenmaploaded) {
   });
   this.markers = []
 
-  whenmaploaded();
-  //if this line hits, the map is loaded.
+  // whenmaploaded();
+  // //if this line hits, the map is loaded.
 
   }.bind(this));
 }
@@ -304,6 +315,17 @@ MapWrapper.prototype.addMarker = function(coords) {
     position: coords,
     map: this.googleMap
   })
+}
+
+MapWrapper.prototype.myLocation = function() {
+  navigator.geolocation.getCurrentPosition(function(position) {
+    const location = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    }
+    this.googleMap.setCenter(location)
+    this.addMarker(location, "Welcome to Jurassic Park");
+  }.bind(this))
 }
 
 module.exports = MapWrapper;
