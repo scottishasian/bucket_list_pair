@@ -17,14 +17,7 @@ const app = function(){
     const createCountryButton = document.querySelector('#save-country');
     createCountryButton.addEventListener('click', createButtonClicked);
 
-    //map functions
-    let center = {lat: 0, lng: 0};
-    let mapDiv = document.getElementById('country-map');
-    let countryMap = new MapWrapper(mapDiv, center, 10);
-    countryMap.myLocation();
-
     request.get(getCountriesRequestComplete);
-
 
 
     //Country info posting, need to refactor
@@ -44,27 +37,20 @@ const app = function(){
     ul.appendChild(img);
     p.appendChild(para);
     p.appendChild(para2);
+    updateMap(countries[this.value])
   });
 
 }
 
-// const initialize =  function(latlng) {
-//   let mapDiv = document.getElementById('country-map');
-//
-//
-//
-//   let center = {lat: 0, lng: 0};
-//
-//   let newLocation = latlng;
-//
-//   let countryMap = new MapWrapper(mapDiv, center, 10, function() {
-//     countryMap.addMarker(center);
-//     countryMap.addMarker(latlng);
-//   });
-  //By installing googlemaps, don't need map JS, or to call google maps in
-  //index.html
+const initialize =  function(latlng) {
+  let center = {lat: 0, lng: 0};
+  let mapDiv = document.getElementById('country-map');
+  let countryMap = new MapWrapper(mapDiv, center, 10);
+  countryMap.myLocation();
+  // By installing googlemaps, don't need map JS, or to call google maps in
+  // index.html
 
-// }
+}
 
 const createButtonClicked = function(evt) {
   evt.preventDefault();
@@ -109,17 +95,7 @@ const handlSelectChange = function(countries) {
     option.innerText = country.name;
     option.value = index;
     select.appendChild(option);
-
-    // const location = {lat: country.latlng[0], lng: country.latlng[1]};
-    // const center = location;
-    // countryMap.addMarker(center, "Welcome to" + country.name);
-    // countryMap.setCenter(center);
-
-
-
-
   }.bind(this));
-
 }
 
 const getCountriesRequestComplete = function(country) {
@@ -127,9 +103,17 @@ const getCountriesRequestComplete = function(country) {
 
 }
 
+const updateMap = function(country){
+  console.log(country.latlng[0], country.latlng[1]);
+  let center = {lat: country.latlng[0], lng: country.latlng[1]};
+  let mapDiv = document.getElementById('country-map');
+  let countryMap = new MapWrapper(mapDiv, center, 10);
+  countryMap.addMarker(center);
+}
+
 
 
 
 
 document.addEventListener('DOMContentLoaded', app);
-// window.addEventListener('load', initialize);
+window.addEventListener('load', initialize);

@@ -15,7 +15,7 @@ BucketView.prototype.clear = function(country) {
 }
 
 BucketView.prototype.render = function(country){
-   const ul = document.querySelector('#populate');
+   const ul = document.querySelector('#wish-list');
    const li = document.createElement('li');
    const text = document.createElement('p');
    text.innerText = `${country.name}: ${country.reason}`;
